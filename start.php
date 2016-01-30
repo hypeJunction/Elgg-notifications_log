@@ -39,12 +39,12 @@ function notifications_log_sent_message($hook, $type, $return, $params) {
 	$recipient = $notification->getRecipient();
 	$sender = $notification->getSender();
 
-	$content = json_encode(array(
+	$content = array(
 		'status' => $return === false ? 'failed' : 'sent',
 		'subject' => $notification->subject,
 		'summary' => $notification->summary,
 		'body' => $notification->body,
-	));
+	);
 	$description = 'instant';
 	
 	$event = elgg_extract('event', $params);
@@ -80,5 +80,5 @@ function notifications_log_sent_message($hook, $type, $return, $params) {
 	}
 
 	$filename = "{$dirname}{$name}.json";
-	file_put_contents($filename, $content);
+	file_put_contents($filename, json_encode($content));
 }
